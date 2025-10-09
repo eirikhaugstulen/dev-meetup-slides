@@ -70,7 +70,7 @@ The focus of this talk is really on how developers like us can practically use A
                     </motion.ul>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="relative w-full max-w-3xl z-10">
+                <motion.div variants={itemVariants} className="relative w-full max-w-3xl z-20">
                     <div className="relative w-full rounded-2xl bg-background/60 border-[0.5px] border-border p-4 shadow backdrop-blur">
                         <FocusVisualization />
                     </div>
