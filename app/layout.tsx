@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Developer Meetup - AI-assisted Development",
@@ -23,6 +24,7 @@ export default function RootLayout({
           </p>
         </div>
       </body>
+      <Analytics /> 
     </html>
   );
 }
