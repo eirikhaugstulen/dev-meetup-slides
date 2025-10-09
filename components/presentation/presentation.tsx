@@ -6,6 +6,7 @@ import { Sun, Moon, Play, Pause, ChevronLeft, ChevronRight, Grid, Maximize, Mini
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Response } from "../ai-elements/response";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
@@ -77,42 +78,77 @@ function Toolbar({ dark, setDark, setGrid, prev, next, playing, setPlaying, isFu
         <div className="fixed z-50 left-1/2 -translate-x-1/2 bottom-6 print:hidden">
             <Card className="backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/40 rounded-2xl shadow-lg py-3">
                 <CardContent className="flex items-center gap-2 px-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={prev} aria-label="Previous slide">
-                        <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPlaying((p) => !p)} aria-label="Autoplay">
-                        {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={next} aria-label="Next slide">
-                        <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={prev} aria-label="Previous slide">
+                                <ChevronLeft className="w-4 h-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Previous (←)</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setPlaying((p) => !p)} aria-label="Autoplay">
+                                {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{playing ? "Pause autoplay" : "Start autoplay"}</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={next} aria-label="Next slide">
+                                <ChevronRight className="w-4 h-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Next (→)</TooltipContent>
+                    </Tooltip>
                     <div className="mx-2 w-px self-stretch bg-black/10 dark:bg-white/10" />
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setGrid((g) => !g)} aria-label="Overview grid (G)">
-                        <Grid className="w-4 h-4" />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className={showNotes ? "h-8 w-8 bg-primary/10" : "h-8 w-8"}
-                        onClick={onNotesClick}
-                        aria-label="Open notes (N)"
-                        aria-pressed={showNotes}
-                    >
-                        <StickyNote className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={toggleFullscreen} aria-label="Fullscreen (F)">
-                        {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setDark((d) => !d)} aria-label="Toggle theme">
-                        {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                    </Button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setGrid((g) => !g)} aria-label="Overview grid (G)">
+                                <Grid className="w-4 h-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Toggle overview (G)</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className={showNotes ? "h-8 w-8 bg-primary/10" : "h-8 w-8"}
+                                onClick={onNotesClick}
+                                aria-label="Open notes (N)"
+                                aria-pressed={showNotes}
+                            >
+                                <StickyNote className="w-4 h-4" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{showNotes ? "Hide notes (N)" : "Show notes (N)"}</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={toggleFullscreen} aria-label="Fullscreen (F)">
+                                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{isFullscreen ? "Exit fullscreen (F)" : "Enter fullscreen (F)"}</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setDark((d) => !d)} aria-label="Toggle theme">
+                                {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{dark ? "Light theme (D)" : "Dark theme (D)"}</TooltipContent>
+                    </Tooltip>
                 </CardContent>
             </Card>
         </div>
     );
 }
 
-export const SlideDeck = ({ slides, autoAdvanceMs = 0.2 * 60 * 1000 }: DeckProps) => {
+export const SlideDeck = ({ slides, autoAdvanceMs = (0.2 * 60 * 1000) }: DeckProps) => {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [dark, setDark] = useState(false);
