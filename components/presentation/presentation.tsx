@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Play, Pause, ChevronLeft, ChevronRight, Grid, Maximize, Minimize } from "lucide-react";
+import { Sun, Moon, Play, Pause, ChevronLeft, ChevronRight, Grid, Maximize, Minimize, StickyNote } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Response } from "../ai-elements/response";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 export type Slide = {
     id: string;
@@ -68,9 +68,11 @@ interface ToolbarProps {
     setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
     isFullscreen: boolean;
     toggleFullscreen: () => void;
+    showNotes: boolean;
+    onNotesClick: () => void;
 }
 
-function Toolbar({ dark, setDark, setGrid, prev, next, playing, setPlaying, isFullscreen, toggleFullscreen }: ToolbarProps) {
+function Toolbar({ dark, setDark, setGrid, prev, next, playing, setPlaying, isFullscreen, toggleFullscreen, showNotes, onNotesClick }: ToolbarProps) {
     return (
         <div className="fixed z-50 left-1/2 -translate-x-1/2 bottom-6 print:hidden">
             <Card className="backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/40 rounded-2xl shadow-lg py-3">
@@ -87,6 +89,16 @@ function Toolbar({ dark, setDark, setGrid, prev, next, playing, setPlaying, isFu
                     <div className="mx-2 w-px self-stretch bg-black/10 dark:bg-white/10" />
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setGrid((g) => !g)} aria-label="Overview grid (G)">
                         <Grid className="w-4 h-4" />
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className={showNotes ? "h-8 w-8 bg-primary/10" : "h-8 w-8"}
+                        onClick={onNotesClick}
+                        aria-label="Open notes (N)"
+                        aria-pressed={showNotes}
+                    >
+                        <StickyNote className="w-4 h-4" />
                     </Button>
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={toggleFullscreen} aria-label="Fullscreen (F)">
                         {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
@@ -144,6 +156,29 @@ export const SlideDeck = ({ slides, autoAdvanceMs = 0.2 * 60 * 1000 }: DeckProps
 
     const next = useCallback(() => go(index + 1), [go, index]);
     const prev = useCallback(() => go(index - 1), [go, index]);
+
+    const handleNotesClick = useCallback(() => {
+        if (showNotes) {
+            setShowNotes(false);
+            return;
+        }
+
+        const enableNotes = () => {
+            setGrid(false);
+            setShowNotes(true);
+        };
+
+        if (document.fullscreenElement) {
+            document
+                .exitFullscreen()
+                .catch((err) => {
+                    console.error("Failed to exit fullscreen before opening notes:", err);
+                })
+                .finally(enableNotes);
+        } else {
+            enableNotes();
+        }
+    }, [showNotes]);
 
     // Query parameter deep-linking
     useEffect(() => {
@@ -277,7 +312,7 @@ export const SlideDeck = ({ slides, autoAdvanceMs = 0.2 * 60 * 1000 }: DeckProps
                     <Toolbar
                         dark={dark}
                         setDark={setDark}
-                        // @ts-ignore
+                        // @ts-expect-error - might fix later
                         grid={grid}
                         setGrid={setGrid}
                         prev={prev}
@@ -286,6 +321,8 @@ export const SlideDeck = ({ slides, autoAdvanceMs = 0.2 * 60 * 1000 }: DeckProps
                         setPlaying={setPlaying}
                         isFullscreen={isFullscreen}
                         toggleFullscreen={toggleFullscreen}
+                        showNotes={showNotes}
+                        onNotesClick={handleNotesClick}
                     />
                     <Progress index={index} total={total} />
 

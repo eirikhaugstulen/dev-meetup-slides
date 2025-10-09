@@ -102,7 +102,7 @@ const CustomResponse = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-type ConversationItem = {
+export type ConversationItem = {
     type: "message" | "step" | "summary";
     role?: "user" | "assistant";
     icon?: React.ReactNode;

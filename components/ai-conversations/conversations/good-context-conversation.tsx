@@ -1,7 +1,8 @@
 import { BrainCircuitIcon, BrainIcon, FileText, Globe, Search } from "lucide-react";
+import { type ConversationItem } from "../ai-conversation-demo";
 
 
-export const goodContextConversation = [
+export const goodContextConversation: ConversationItem[] = [
     {
         role: "user",
         type: "message",
