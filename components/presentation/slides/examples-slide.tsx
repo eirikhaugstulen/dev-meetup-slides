@@ -72,6 +72,10 @@ These models are pattern recognition machines. So if there's a file in your proj
                             <span className="size-2 rounded-full bg-primary/50" />
                             <span>Tell it what to extract</span>
                         </motion.li>
+                        <motion.li className="flex items-center gap-3" variants={itemVariants}>
+                            <span className="size-2 rounded-full bg-primary/50" />
+                            <span>Reference files, docs, other repos, etc.</span>
+                        </motion.li>
                     </motion.ul>
                 </motion.div>
 

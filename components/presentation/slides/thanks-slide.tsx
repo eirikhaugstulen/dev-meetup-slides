@@ -64,12 +64,12 @@ Hope to hear from you!
                     className="space-y-4"
                     variants={titleVariants}
                 >
-                    <h1 className="text-7xl font-bold tracking-tight">
+                    <h1 className="text-5xl font-bold tracking-tight">
                         <AnimatedShinyText shimmerWidth={200} className="inline-block text-foreground dark:text-foreground">
-                            Thank You! 🎉
+                            Thank You!
                         </AnimatedShinyText>
                     </h1>
-                    <p className="text-2xl text-muted-foreground font-medium">
+                    <p className="text-xl text-muted-foreground font-medium">
                         For your time and attention
                     </p>
                 </motion.div>
