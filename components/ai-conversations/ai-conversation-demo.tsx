@@ -91,7 +91,7 @@ const CustomResponse = ({ children }: { children: React.ReactNode }) => {
         <Response
             components={{
                 code: ({ children }) => (
-                    <code className="bg-gray-200 rounded mx-0.5 px-1 text-xs!">
+                    <code className="bg-gray-200 dark:bg-gray-800 rounded mx-0.5 px-1 text-xs!">
                         {children}
                     </code>
                 ),

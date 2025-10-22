@@ -9,4 +9,7 @@ export { examplesSlide } from './examples-slide';
 export { taskBreakdownSlide } from './task-breakdown-slide';
 export { chatDemoSlide } from './chat-demo-slide';
 export { choosingToolsSlide } from './choosing-tools-slide';
+export { codeReviewUnderstandingSlide } from './code-review-understanding-slide';
+export { planModeSlide } from './plan-mode-slide';
+export { impactTestimonialSlide } from './impact-testimonial-slide';
 

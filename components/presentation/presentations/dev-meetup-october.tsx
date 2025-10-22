@@ -1,4 +1,4 @@
-import { titleSlide, aboutSlide, thanksSlide, disclaimerSlide, stateOfGenerativeAISlide, agentPovSlide, contextWindowSlide, examplesSlide, taskBreakdownSlide, chatDemoSlide, choosingToolsSlide } from "../slides";
+import { titleSlide, aboutSlide, thanksSlide, disclaimerSlide, stateOfGenerativeAISlide, agentPovSlide, contextWindowSlide, examplesSlide, taskBreakdownSlide, planModeSlide, chatDemoSlide, choosingToolsSlide, codeReviewUnderstandingSlide, impactTestimonialSlide } from "../slides";
 
 export const devMeetupOctoberSlides = [
     titleSlide,
@@ -9,8 +9,11 @@ export const devMeetupOctoberSlides = [
     contextWindowSlide,
     examplesSlide,
     taskBreakdownSlide,
+    planModeSlide,
     chatDemoSlide,
     choosingToolsSlide,
+    codeReviewUnderstandingSlide,
+    impactTestimonialSlide,
     thanksSlide,
 ];
 
